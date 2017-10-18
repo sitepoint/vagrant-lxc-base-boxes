@@ -45,19 +45,6 @@ cd vagrant-lxc-base-boxes
 make precise
 ```
 
-By default no provisioning tools will be included but you can pick the ones
-you want by providing some environmental variables. For example:
-
-```sh
-ANSIBLE=1 PUPPET=1 CHEF=1 SALT=1 BABUSHKA=1 \
-make precise
-```
-
-Will build a Ubuntu Precise x86_64 box with latest Ansible, Puppet, Chef, Salt and
-Babushka pre-installed.
-
-When using ANSIBLE=1, an optional ANSIBLE_VERSION parameter may be passed that will specify which version of ansible to install. By default it will install the latest Ansible.
-
 Additional packages to be installed can be specified with the ADDPACKAGES variable:
 
 ```sh
@@ -93,5 +80,3 @@ See [vagrant-lxc/BOXES.md](https://github.com/fgrehm/vagrant-lxc/blob/master/BOX
 
 * We can't get the NFS client to be installed on the containers used for building
   Ubuntu 13.04 / 13.10 / 14.04 base boxes.
-* Puppet can't be installed on Debian Sid
-* Salt can't be installed on Ubuntu 13.04
