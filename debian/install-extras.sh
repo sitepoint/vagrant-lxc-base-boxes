@@ -31,9 +31,3 @@ fi
 utils.lxc.attach apt-get update
 utils.lxc.attach apt-get install ${PACKAGES[*]} -y --force-yes
 utils.lxc.attach apt-get upgrade -y --force-yes
-
-if [ $DISTRIBUTION = 'debian' ]; then
-  # Enable bash-completion
-  sed -e '/^#if ! shopt -oq posix; then/,/^#fi/ s/^#\(.*\)/\1/g' \
-    -i ${ROOTFS}/etc/bash.bashrc
-fi
