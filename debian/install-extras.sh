@@ -21,12 +21,12 @@ PACKAGES+=" ${ADDPACKAGES}"
 
 if [ $DISTRIBUTION = 'ubuntu' ]; then
   PACKAGES+=' software-properties-common'
-fi
-if [ $RELEASE != 'raring' ] && [ $RELEASE != 'saucy' ] && [ $RELEASE != 'trusty' ] && [ $RELEASE != 'wily' ] ; then
-  PACKAGES+=' nfs-common'
-fi
-if [ $RELEASE != 'stretch' ] ; then
-  PACKAGES+=' python-software-properties'
+  if [ $RELEASE != 'raring' ] && [ $RELEASE != 'saucy' ] &&
+    [ $RELEASE != 'trusty' ] && [ $RELEASE != 'wily' ]; then
+    PACKAGES+=' nfs-common'
+  fi
+elif [ $DISTRIBUTION = 'debian' ] && [ $RELEASE = 'jessie' ]; then
+    PACKAGES+=' python-software-properties'
 fi
 utils.lxc.attach apt-get update
 utils.lxc.attach apt-get install ${PACKAGES[*]} -y --force-yes
