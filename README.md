@@ -1,36 +1,39 @@
 # vagrant-lxc base boxes
 
-This repository contains a set of scripts for creating base boxes for usage with
-[vagrant-lxc](https://github.com/fgrehm/vagrant-lxc) 1.0+.
+This repository contains a set of scripts for creating base boxes for
+usage with [vagrant-lxc](https://github.com/fgrehm/vagrant-lxc) 1.4+.
+
+Older versions of vagrant-lxc may also work but have not been tested.
 
 ## What distros / versions can I build with this?
 
 * Ubuntu
-  - Precise 12.04 x86_64
-  - Quantal 12.10 x86_64
-  - Raring 13.04 x86_64
-  - Saucy 13.10 x86_64
-  - Trusty 14.04 x86_64
-  - Utopic 14.10 x86_64
-  - Vivid 15.04 x86_64
-  - Wily 15.10 x86_64
   - Xenial 16.04 x86_64
+  - Wily 15.10 x86_64
+  - Vivid 15.04 x86_64
+  - Utopic 14.10 x86_64
+  - Trusty 14.04 x86_64
+  - Saucy 13.10 x86_64
+  - Raring 13.04 x86_64
+  - Quantal 12.10 x86_64
+  - Precise 12.04 x86_64
 * Debian
-  - Squeeze x86_64
-  - Wheezy x86_64
-  - Jessie x86_64
-  - Stretch x86_64
   - Sid x86_64
+  - Buster x86_64
+  - Stretch x86_64
+  - Jessie x86_64
+  - Wheezy x86_64
+  - Squeeze x86_64
 * Fedora
-  - 19 x86_64
-  - 20 x86_64
-  - 21 x86_64
-  - 22 x86_64
-  - 23 x86_64
   - rawhide x86_64
+  - 23 x86_64
+  - 22 x86_64
+  - 21 x86_64
+  - 20 x86_64
+  - 19 x86_64
 * CentOS
-  - 6 x86_64
   - 7 x86_64
+  - 6 x86_64
 
 ## Building the boxes
 
@@ -42,19 +45,19 @@ and drop it on your lxc templates path (usually `/usr/share/lxc/templates`)._
 ```sh
 git clone https://github.com/obnoxxx/vagrant-lxc-base-boxes.git
 cd vagrant-lxc-base-boxes
-make precise
+make stretch
 ```
 
 Additional packages to be installed can be specified with the ADDPACKAGES variable:
 
 ```sh
 ADDPACKAGES="aptitude htop" \
-make trusty
+make xenial
 ```
 
-Will build a Ubuntu Trusty x86_64 box with aptitude and htop as additional
+Will build a Ubuntu Xenial x86_64 box with aptitude and htop as additional
 packages pre-installed. You can also specify the packages in a file
-trusty_packages.
+xenial_packages.
 
 Note: ADDPACKAGES is currently only implemented for flavors of debian.
 
