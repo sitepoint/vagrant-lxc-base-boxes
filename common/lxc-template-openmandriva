@@ -31,7 +31,8 @@
 
 set -e
 
-if [ -r /etc/default/lxc ]; then
+if [ -r /etc/default/lxc ]
+then
     . /etc/default/lxc
 fi
 
@@ -56,13 +57,15 @@ install_openmandriva()
 
     (
         flock -x 200
-        if [ $? -ne 0 ]; then
+        if [ $? -ne 0 ]
+        then
             echo "Cache repository is busy."
             return 1
         fi
 
         extract_rootfs $tarball $arch $rootfs
-        if [ $? -ne 0 ]; then
+        if [ $? -ne 0 ]
+        then
             echo "Failed to copy rootfs"
             return 1
         fi
@@ -85,11 +88,13 @@ copy_configuration()
     # if there is exactly one veth network entry, make sure it has an
     # associated hwaddr.
     nics=`grep -e '^lxc\.network\.type[ \t]*=[ \t]*veth' $path/config | wc -l`
-    if [ $nics -eq 1 ]; then
+    if [ $nics -eq 1 ]
+    then
         grep -q "^lxc.network.hwaddr" $path/config || sed -i -e "/^lxc\.network\.type[ \t]*=[ \t]*veth/a lxc.network.hwaddr = 00:16:3e:$(openssl rand -hex 3| sed 's/\(..\)/\1:/g; s/.$//')" $path/config
     fi
 
-    if [ $? -ne 0 ]; then
+    if [ $? -ne 0 ]
+    then
         echo "Failed to add configuration"
         return 1
     fi
@@ -105,7 +110,8 @@ post_process()
     # I'm afraid of doing rm -rf $rootfs/dev/shm, in case it did
     # get bind mounted to the host's /run/shm.  So try to rmdir
     # it, and in case that fails move it out of the way.
-    if [ ! -L $rootfs/dev/shm ] && [ -d $rootfs/run/shm ] && [ -e $rootfs/dev/shm ]; then
+    if [ ! -L $rootfs/dev/shm ] && [ -d $rootfs/run/shm ] && [ -e $rootfs/dev/shm ]
+    then
         mv $rootfs/dev/shm $rootfs/dev/shm.bak
         ln -s /run/shm $rootfs/dev/shm
     fi
@@ -144,14 +150,15 @@ EOF
 }
 
 options=$(getopt -o hp:n:P:cR:4:6:g:d:A:S:T: -l help,rootfs:,path:,name:,profile:,clean:,release:,ipv4:,ipv6:,gw:,dns:,arch:,auth-key:,tarball: -- "$@")
-if [ $? -ne 0 ]; then
+if [ $? -ne 0 ]
+then
     usage $(basename $0)
     exit 1
 fi
 eval set -- "$options"
 
 # doesn't use
-release=${release:-"cooker"} 
+release=${release:-"cooker"}
 
 hostarch=$(uname -m)
 while true
@@ -177,17 +184,20 @@ do
 done
 
 arch=${arch:-$hostarch}
-if [ $hostarch = "i586" -a $arch = "x86_64" ]; then
+if [ $hostarch = "i586" -a $arch = "x86_64" ]
+then
     echo "can't create x86_64 container on i586"
     exit 1
 fi
 
-if [ -z "$path" ]; then
+if [ -z "$path" ]
+then
     echo "'path' parameter is required"
     exit 1
 fi
 
-if [ "$(id -u)" != "0" ]; then
+if [ "$(id -u)" != "0" ]
+then
     echo "This script should be run as 'root'"
     exit 1
 fi
@@ -195,8 +205,10 @@ fi
 # detect rootfs
 config="$path/config"
 # if $rootfs exists here, it was passed in with --rootfs
-if [ -z "$rootfs" ]; then
-    if grep -q '^lxc.rootfs' $config 2>/dev/null ; then
+if [ -z "$rootfs" ]
+then
+    if grep -q '^lxc.rootfs' $config 2>/dev/null
+    then
         rootfs=`grep 'lxc.rootfs =' $config | awk -F= '{ print $2 }'`
     else
         rootfs=$path/rootfs
@@ -204,13 +216,15 @@ if [ -z "$rootfs" ]; then
 fi
 
 install_openmandriva $rootfs $release $tarball
-if [ $? -ne 0 ]; then
+if [ $? -ne 0 ]
+then
     echo "failed to install openmandriva $release"
     exit 1
 fi
 
 copy_configuration $path $rootfs $name $arch
-if [ $? -ne 0 ]; then
+if [ $? -ne 0 ]
+then
     echo "failed write configuration file"
     exit 1
 fi

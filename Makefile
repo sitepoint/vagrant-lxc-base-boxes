@@ -1,7 +1,7 @@
-UBUNTU_BOXES= xenial wily vivid utopic trusty saucy raring quantal precise
-DEBIAN_BOXES= buster stretch jessie wheezy squeeze sid
 CENTOS_BOXES= 6 7
+DEBIAN_BOXES= buster stretch jessie wheezy squeeze sid
 FEDORA_BOXES= rawhide 23 22 21 20 19
+UBUNTU_BOXES= xenial wily vivid utopic trusty saucy raring quantal precise
 TODAY=$(shell date -u +"%Y-%m-%d")
 
 # Replace i686 with i386 and x86_64 with amd64
@@ -17,20 +17,6 @@ centos: $(CENTOS_BOXES)
 fedora: $(FEDORA_BOXES)
 
 # REFACTOR: Figure out how can we reduce duplicated code
-$(UBUNTU_BOXES): CONTAINER = "vagrant-base-${@}-$(ARCH)"
-$(UBUNTU_BOXES): PACKAGE = "output/${TODAY}/vagrant-lxc-${@}-$(ARCH).box"
-$(UBUNTU_BOXES):
-	@mkdir -p $$(dirname $(PACKAGE))
-	@sudo -E ./mk-debian.sh ubuntu $(@) $(ARCH) $(CONTAINER) $(PACKAGE)
-	@sudo chmod +rw $(PACKAGE)
-	@sudo chown ${USER}: $(PACKAGE)
-$(DEBIAN_BOXES): CONTAINER = "vagrant-base-${@}-$(ARCH)"
-$(DEBIAN_BOXES): PACKAGE = "output/${TODAY}/vagrant-lxc-${@}-$(ARCH).box"
-$(DEBIAN_BOXES):
-	@mkdir -p $$(dirname $(PACKAGE))
-	@sudo -E ./mk-debian.sh debian $(@) $(ARCH) $(CONTAINER) $(PACKAGE)
-	@sudo chmod +rw $(PACKAGE)
-	@sudo chown ${USER}: $(PACKAGE)
 $(CENTOS_BOXES): CONTAINER = "vagrant-base-centos-${@}-$(ARCH)"
 $(CENTOS_BOXES): PACKAGE = "output/${TODAY}/vagrant-lxc-centos-${@}-$(ARCH).box"
 $(CENTOS_BOXES):
@@ -38,11 +24,28 @@ $(CENTOS_BOXES):
 	@sudo -E ./mk-centos.sh $(@) $(ARCH) $(CONTAINER) $(PACKAGE)
 	@sudo chmod +rw $(PACKAGE)
 	@sudo chown ${USER}: $(PACKAGE)
+
+$(DEBIAN_BOXES): CONTAINER = "vagrant-base-${@}-$(ARCH)"
+$(DEBIAN_BOXES): PACKAGE = "output/${TODAY}/vagrant-lxc-${@}-$(ARCH).box"
+$(DEBIAN_BOXES):
+	@mkdir -p $$(dirname $(PACKAGE))
+	@sudo -E bash -x ./mk-debian.sh debian $(@) $(ARCH) $(CONTAINER) $(PACKAGE)
+	@sudo chmod +rw $(PACKAGE)
+	@sudo chown ${USER}: $(PACKAGE)
+
 $(FEDORA_BOXES): CONTAINER = "vagrant-base-fedora-${@}-$(ARCH)"
 $(FEDORA_BOXES): PACKAGE = "output/${TODAY}/vagrant-lxc-fedora-${@}-$(ARCH).box"
 $(FEDORA_BOXES):
 	@mkdir -p $$(dirname $(PACKAGE))
 	@sudo -E ./mk-fedora.sh $(@) $(ARCH) $(CONTAINER) $(PACKAGE)
+	@sudo chmod +rw $(PACKAGE)
+	@sudo chown ${USER}: $(PACKAGE)
+
+$(UBUNTU_BOXES): CONTAINER = "vagrant-base-${@}-$(ARCH)"
+$(UBUNTU_BOXES): PACKAGE = "output/${TODAY}/vagrant-lxc-${@}-$(ARCH).box"
+$(UBUNTU_BOXES):
+	@mkdir -p $$(dirname $(PACKAGE))
+	@sudo -E ./mk-debian.sh ubuntu $(@) $(ARCH) $(CONTAINER) $(PACKAGE)
 	@sudo chmod +rw $(PACKAGE)
 	@sudo chown ${USER}: $(PACKAGE)
 

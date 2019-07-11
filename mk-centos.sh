@@ -3,9 +3,10 @@ set -e
 
 source common/ui.sh
 
-if [ "$(id -u)" != "0" ]; then
-  echo "You should run this script as root (sudo)."
-  exit 1
+if [ "$(id -u)" != "0" ]
+then
+    echo "You should run this script as root (sudo)."
+    exit 1
 fi
 
 export DISTRIBUTION='centos'
@@ -24,10 +25,11 @@ echo "# Beginning build at $(date)" >> ${LOG}
 touch ${LOG}
 chmod +rw ${LOG}
 
-if [ -f ${PACKAGE} ]; then
-  warn "The box '${PACKAGE}' already exists, skipping..."
-  echo
-  exit
+if [ -f ${PACKAGE} ]
+then
+    warn "The box '${PACKAGE}' already exists, skipping..."
+    echo
+    exit
 fi
 
 debug "Creating ${WORKING_DIR}"

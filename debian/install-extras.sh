@@ -19,13 +19,16 @@ PACKAGES=(man-db openssh-server bash-completion ca-certificates sudo)
 log "Installing additional packages: ${ADDPACKAGES}"
 PACKAGES+=" ${ADDPACKAGES}"
 
-if [ $DISTRIBUTION = 'ubuntu' ]; then
-  PACKAGES+=' software-properties-common'
-  if [ $RELEASE != 'raring' ] && [ $RELEASE != 'saucy' ] &&
-    [ $RELEASE != 'trusty' ] && [ $RELEASE != 'wily' ]; then
-    PACKAGES+=' nfs-common'
-  fi
-elif [ $DISTRIBUTION = 'debian' ] && [ $RELEASE = 'jessie' ]; then
+if [ $DISTRIBUTION = 'ubuntu' ]
+then
+    PACKAGES+=' software-properties-common'
+    if [ $RELEASE != 'raring' ] && [ $RELEASE != 'saucy' ] &&
+           [ $RELEASE != 'trusty' ] && [ $RELEASE != 'wily' ]
+    then
+        PACKAGES+=' nfs-common'
+    fi
+elif [ $DISTRIBUTION = 'debian' ] && [ $RELEASE = 'jessie' ]
+then
     PACKAGES+=' python-software-properties'
 fi
 utils.lxc.attach apt-get update

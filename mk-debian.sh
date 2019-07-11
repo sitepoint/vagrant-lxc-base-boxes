@@ -3,9 +3,10 @@ set -e
 
 source common/ui.sh
 
-if [ "$(id -u)" != "0" ]; then
-  echo "You should run this script as root (sudo)."
-  exit 1
+if [ "$(id -u)" != "0" ]
+then
+    echo "You should run this script as root (sudo)."
+    exit 1
 fi
 
 export DISTRIBUTION=$1
@@ -14,7 +15,7 @@ export ARCH=$3
 export CONTAINER=$4
 export PACKAGE=$5
 export ADDPACKAGES=${ADDPACKAGES-$(test -f "${RELEASE}_packages" &&
-                                     cat "${RELEASE}_packages" | tr '\n' ' ')}
+                                       cat "${RELEASE}_packages" | tr '\n' ' ')}
 export ROOTFS="/var/lib/lxc/${CONTAINER}/rootfs"
 export WORKING_DIR="/tmp/${CONTAINER}"
 export NOW=$(date -u)
@@ -26,10 +27,11 @@ echo "# Beginning build at $(date)" >> ${LOG}
 touch ${LOG}
 chmod +rw ${LOG}
 
-if [ -f ${PACKAGE} ]; then
-  warn "The box '${PACKAGE}' already exists, skipping..."
-  echo
-  exit
+if [ -f ${PACKAGE} ]
+then
+    warn "The box '${PACKAGE}' already exists, skipping..."
+    echo
+    exit
 fi
 
 debug "Creating ${WORKING_DIR}"
