@@ -1,5 +1,5 @@
-UBUNTU_BOXES= precise quantal raring saucy trusty utopic vivid wily xenial
-DEBIAN_BOXES= squeeze wheezy jessie stretch buster sid
+UBUNTU_BOXES= xenial wily vivid utopic trusty saucy raring quantal precise
+DEBIAN_BOXES= buster stretch jessie wheezy squeeze sid
 CENTOS_BOXES= 6 7
 FEDORA_BOXES= rawhide 23 22 21 20 19
 TODAY=$(shell date -u +"%Y-%m-%d")
