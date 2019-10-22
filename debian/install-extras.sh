@@ -22,11 +22,6 @@ PACKAGES+=" ${ADDPACKAGES}"
 if [ $DISTRIBUTION = 'ubuntu' ]
 then
     PACKAGES+=' software-properties-common'
-    if [ $RELEASE != 'raring' ] && [ $RELEASE != 'saucy' ] &&
-           [ $RELEASE != 'trusty' ] && [ $RELEASE != 'wily' ]
-    then
-        PACKAGES+=' nfs-common'
-    fi
 elif [ $DISTRIBUTION = 'debian' ] && [ $RELEASE = 'jessie' ]
 then
     PACKAGES+=' python-software-properties'
