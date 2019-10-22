@@ -44,8 +44,18 @@ then
 
         # Mask udev.service and systemd-udevd.service:
         utils.lxc.attach /bin/systemctl mask udev.service systemd-udevd.service
-    fi
+elif [ ${DISTRIBUTION} = 'ubuntu' ]
+then
+    # Disable dev-hugepages.mount
+    mkdir -m 0755 "${ROOTFS}/etc/systemd/system/dev-hugepages.mount.d/"
+    echo -e '[Unit]\nConditionVirtualization=!container' > \
+        "${ROOTFS}/etc/systemd/system/dev-hugepages.mount.d/fix.conf"
 fi
+
+# Disable systemd-journald-audit.socket
+mkdir -m 0755 "${ROOTFS}/etc/systemd/system/systemd-journald-audit.socket.d/"
+echo -e '[Unit]\nConditionVirtualization=!container' > \
+    "${ROOTFS}/etc/systemd/system/systemd-journald-audit.socket.d/fix.conf"
 
 utils.lxc.attach /usr/sbin/locale-gen ${LANG}
 utils.lxc.attach update-locale LANG=${LANG}
