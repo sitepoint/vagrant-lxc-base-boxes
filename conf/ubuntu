@@ -1,6 +1,6 @@
 # Default mount entries
-lxc.mount.entry = proc proc proc nodev,noexec,nosuid 0 0
-lxc.mount.entry = sysfs sys sysfs defaults 0 0
+lxc.mount.auto = cgroup:mixed proc:mixed sys:mixed
+lxc.mount.entry = /sys/fs/fuse/connections sys/fs/fuse/connections none bind,optional 0 0
 
 # Default console settings
 lxc.tty.max = 4
