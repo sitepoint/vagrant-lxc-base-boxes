@@ -46,9 +46,12 @@ ADDPACKAGES="aptitude htop" \
 make xenial
 ```
 
-Will build a Ubuntu Xenial x86_64 box with aptitude and htop as additional
-packages pre-installed. You can also specify the packages in a file
-xenial_packages.
+Will build a Ubuntu Xenial x86_64 box with aptitude and htop as
+additional packages pre-installed. You can also specify the packages
+in a file xenial_packages.
+
+Unwanted packages can also be removed via the REMPACKAGES variable
+should the lxc-download template pull in something undesirable.
 
 
 ## Pre built base boxes
