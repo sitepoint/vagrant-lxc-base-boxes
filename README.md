@@ -9,17 +9,17 @@ Testing is mostly performed on Debian 10 (buster).
 
 ## What distros / versions can I build with this?
 
-The scope of boxes that can be built with this (and gets testing) is
+The boxes that can be built with this (and receive testing) are
 limited to the following:
 
 * Debian
-  - Buster x86_64
   - Stretch x86_64
 * Ubuntu
   - Xenial 16.04 x86_64
 
-If your distribution is not on the list, you might instead be
-interested in the original
+This list will be updated over time with newer stable releases (and
+oldstable releases eventually dropped). If your distribution is not on
+the list, you might instead be interested in the original
 [vagrant-lxc-base-boxes](https://github.com/obnoxxx/vagrant-lxc-base-boxes)
 project which this was forked from.
 
