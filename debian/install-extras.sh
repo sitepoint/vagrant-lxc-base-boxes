@@ -39,3 +39,5 @@ do
         utils.lxc.attach apt-get --purge remove "${package}"
     fi
 done
+
+utils.lxc.attach apt-get --purge autoremove
