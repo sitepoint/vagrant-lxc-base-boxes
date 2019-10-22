@@ -32,7 +32,7 @@ then
 
     # Fixes for jessie, following the guide from
     # https://wiki.debian.org/LXC#Incompatibility_with_systemd
-    if [ "$RELEASE" = 'jessie' ] || [ "$RELEASE" = 'stretch' ]
+    if [ "$RELEASE" = 'stretch' ]
     then
         # Reconfigure the LXC
         utils.lxc.attach /bin/cp \

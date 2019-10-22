@@ -3,6 +3,7 @@ set -e
 
 source common/ui.sh
 
+# https://github.com/hashicorp/vagrant/tree/master/keys
 export VAGRANT_KEY="ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key"
 
 info "Preparing vagrant user..."
@@ -19,19 +20,6 @@ then
     chroot ${ROOTFS} groupmod -n vagrant ubuntu &>> ${LOG}
     echo -n 'vagrant:vagrant' | chroot ${ROOTFS} chpasswd
     log 'Renamed ubuntu user to vagrant and changed password.'
-elif [ ${DISTRIBUTION} = 'centos' -o ${DISTRIBUTION} = 'fedora' ]
-then
-    debug 'Creating vagrant user...'
-    chroot ${ROOTFS} useradd --create-home -s /bin/bash -u 1000 vagrant &>> ${LOG}
-    echo -n 'vagrant:vagrant' | chroot ${ROOTFS} chpasswd
-    sed -i 's/^Defaults\s\+requiretty/# Defaults requiretty/' $ROOTFS/etc/sudoers
-    if [ ${RELEASE} -eq 6 ]
-    then
-        info 'Disabling password aging for root...'
-        # disable password aging (required on Centos 6)
-        # pretend that password was changed today (won't fail during provisioning)
-        chroot ${ROOTFS} chage -I -1 -m 0 -M 99999 -E -1 -d `date +%Y-%m-%d` root
-    fi
 else
     debug 'Creating vagrant user...'
     chroot ${ROOTFS} useradd --create-home -s /bin/bash vagrant &>> ${LOG}
