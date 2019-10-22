@@ -30,20 +30,18 @@ then
     utils.lxc.attach /usr/sbin/update-rc.d -f mountall-bootclean.sh remove
     utils.lxc.attach /usr/sbin/update-rc.d -f mountnfs-bootclean.sh remove
 
-    # Fixes for jessie, following the guide from
-    # https://wiki.debian.org/LXC#Incompatibility_with_systemd
-    if [ "$RELEASE" = 'stretch' ]
-    then
-        # Reconfigure the LXC
-        utils.lxc.attach /bin/cp \
-            /lib/systemd/system/getty@.service \
-            /etc/systemd/system/getty@.service
-        # Comment out ConditionPathExists
-        sed -i -e 's/\(ConditionPathExists=\)/# \n# \1/' \
-            "${ROOTFS}/etc/systemd/system/getty@.service"
+    # It is unclear if this is still required.
+    #
+    # Reconfigure the LXC
+    utils.lxc.attach /bin/cp \
+        /lib/systemd/system/getty@.service \
+        /etc/systemd/system/getty@.service
+    # Comment out ConditionPathExists
+    sed -i -e 's/\(ConditionPathExists=\)/# \n# \1/' \
+        "${ROOTFS}/etc/systemd/system/getty@.service"
 
-        # Mask udev.service and systemd-udevd.service:
-        utils.lxc.attach /bin/systemctl mask udev.service systemd-udevd.service
+    # Mask udev.service and systemd-udevd.service:
+    utils.lxc.attach /bin/systemctl mask udev.service systemd-udevd.service
 elif [ ${DISTRIBUTION} = 'ubuntu' ]
 then
     # Disable dev-hugepages.mount
