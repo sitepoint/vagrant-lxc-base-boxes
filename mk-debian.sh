@@ -16,7 +16,13 @@ export CONTAINER=$4
 export PACKAGE=$5
 export ADDPACKAGES=${ADDPACKAGES-$(test -f "${RELEASE}_packages" &&
                                        cat "${RELEASE}_packages" | tr '\n' ' ')}
-export ROOTFS="/var/lib/lxc/${CONTAINER}/rootfs"
+if [ ${UID} -eq 0 ]
+then
+    ROOTFS="/var/lib/lxc/${CONTAINER}/rootfs"
+else
+    ROOTFS="${HOME}/.local/share/lxc/${CONTAINER}/rootfs"
+fi
+export ROOTFS
 export WORKING_DIR="/tmp/${CONTAINER}"
 export NOW=$(date -u)
 export LOG=$(readlink -f .)/log/${CONTAINER}.log
@@ -47,5 +53,5 @@ info "Building box to '${PACKAGE}'..."
 ./common/package.sh ${CONTAINER} ${PACKAGE}
 
 info "Finished building '${PACKAGE}'!"
-log "Run \`sudo lxc-destroy -n ${CONTAINER}\` or \`make clean\` to remove the container that was created along the way"
+log "Run \`lxc-destroy -n ${CONTAINER}\` or \`make clean\` to remove the container that was created along the way"
 echo

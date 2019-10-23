@@ -15,6 +15,7 @@ log "Sleeping for $SECS seconds..."
 sleep $SECS
 
 PACKAGES=(man-db openssh-server bash-completion ca-certificates sudo)
+DELPACKAGES=(nfs-kernel-server rpcbind nfs-common)
 
 log "Installing additional packages: ${ADDPACKAGES}"
 PACKAGES+=" ${ADDPACKAGES}"
@@ -22,11 +23,6 @@ PACKAGES+=" ${ADDPACKAGES}"
 if [ $DISTRIBUTION = 'ubuntu' ]
 then
     PACKAGES+=' software-properties-common'
-    if [ $RELEASE != 'raring' ] && [ $RELEASE != 'saucy' ] &&
-           [ $RELEASE != 'trusty' ] && [ $RELEASE != 'wily' ]
-    then
-        PACKAGES+=' nfs-common'
-    fi
 elif [ $DISTRIBUTION = 'debian' ] && [ $RELEASE = 'jessie' ]
 then
     PACKAGES+=' python-software-properties'
@@ -34,3 +30,14 @@ fi
 utils.lxc.attach apt-get update
 utils.lxc.attach apt-get install ${PACKAGES[*]} -y --force-yes
 utils.lxc.attach apt-get upgrade -y --force-yes
+
+log "Purging unwanted packages: ${DELPACKGES}"
+for package in ${DELPACKAGES} ${REMPACKAGES}
+do
+    if utils.lxc.pkginstalled "${package}"
+    then
+        utils.lxc.attach apt-get --purge remove "${package}"
+    fi
+done
+
+utils.lxc.attach apt-get --purge autoremove
