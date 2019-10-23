@@ -30,18 +30,12 @@ fi
 
 # If we got to this point, we need to create the container
 log "Creating container..."
-if [ $RELEASE = 'xenial' ]
-then
-    utils.lxc.create -t ubuntu -- \
-        --release ${RELEASE} \
-        --arch ${ARCH}
-else
-    utils.lxc.create -t download -- \
-        --dist ${DISTRIBUTION} \
-        --release ${RELEASE} \
-        --arch ${ARCH}
-fi
-if [ ${DISTRIBUTION} = 'debian' -a ${RELEASE} = 'stretch' ]
+utils.lxc.create -t download -- \
+    --dist ${DISTRIBUTION} \
+    --release ${RELEASE} \
+    --arch ${ARCH}
+if [ ${UID} -eq 0 ] &&
+    [ ${DISTRIBUTION} = 'debian' -a ${RELEASE} = 'stretch' ]
 then
     # Improve systemd support:
     # - The debian template does it but the debian image from the download

@@ -16,22 +16,20 @@ $(DEBIAN_BOXES): CONTAINER = "vagrant-base-${@}-$(ARCH)"
 $(DEBIAN_BOXES): PACKAGE = "output/${TODAY}/vagrant-lxc-${@}-$(ARCH).box"
 $(DEBIAN_BOXES):
 	@mkdir -p $$(dirname $(PACKAGE))
-	@sudo -E bash -x ./mk-debian.sh debian $(@) $(ARCH) $(CONTAINER) $(PACKAGE)
-	@sudo chmod +rw $(PACKAGE)
-	@sudo chown ${USER}: $(PACKAGE)
+	@./mk-debian.sh debian $(@) $(ARCH) $(CONTAINER) $(PACKAGE)
+	@chmod +rw $(PACKAGE)
 
 $(UBUNTU_BOXES): CONTAINER = "vagrant-base-${@}-$(ARCH)"
 $(UBUNTU_BOXES): PACKAGE = "output/${TODAY}/vagrant-lxc-${@}-$(ARCH).box"
 $(UBUNTU_BOXES):
 	@mkdir -p $$(dirname $(PACKAGE))
-	@sudo -E ./mk-debian.sh ubuntu $(@) $(ARCH) $(CONTAINER) $(PACKAGE)
-	@sudo chmod +rw $(PACKAGE)
-	@sudo chown ${USER}: $(PACKAGE)
+	@./mk-debian.sh ubuntu $(@) $(ARCH) $(CONTAINER) $(PACKAGE)
+	@chmod +rw $(PACKAGE)
 
 clean: ALL_BOXES = ${DEBIAN_BOXES} ${UBUNTU_BOXES}
 clean:
 	@for r in $(ALL_BOXES); do \
-		sudo -E ./clean.sh $${r}\
+		./clean.sh $${r}\
 			vagrant-base-$${r}-$(ARCH) \
 			output/${TODAY}/vagrant-lxc-$${r}-$(ARCH).box; \
 	done
