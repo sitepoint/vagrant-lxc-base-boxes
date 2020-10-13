@@ -25,13 +25,12 @@ project which this was forked from.
 
 ## Building the boxes
 
-_In order to build the boxes you need to have the `lxc-download`
+In order to build the boxes you need to have the `lxc-download`
 template available on your machine (note: the `lxc` package included
-in Debian 10 satisfies this requirement). If you don't have one
-present, please create one based on
+in Debian 10 satisfies this requirement). Create one based on
 [this](https://github.com/lxc/lxc/blob/master/templates/lxc-download.in)
-and drop it on your lxc templates path (usually
-`/usr/share/lxc/templates/`)._
+template if required, and drop it on your lxc templates path (usually
+`/usr/share/lxc/templates/`).
 
 ```sh
 git clone https://github.com/sitepoint/vagrant-lxc-base-boxes.git
@@ -46,12 +45,12 @@ ADDPACKAGES="aptitude htop" \
 make xenial
 ```
 
-Will build a Ubuntu Xenial x86_64 box with aptitude and htop as
-additional packages pre-installed. You can also specify the packages
-in a file xenial_packages.
+The above command will build a Ubuntu Xenial x86\_64 box with aptitude
+and htop as additional packages pre-installed. You can also specify
+the packages in a file xenial\_packages.
 
-Unwanted packages can also be removed via the REMPACKAGES variable
-should the lxc-download template pull in something undesirable.
+Unwanted packages can be removed via the REMPACKAGES variable should
+the lxc-download template try to pull in something undesirable.
 
 
 ## Pre built base boxes
@@ -60,6 +59,7 @@ _**NOTE:** None of the base boxes below have a provisioner pre-installed_
 
 | Distribution | VagrantCloud box |
 | ------------ | ---------------- |
+| Debian Buster 10 x86_64 | [debian-buster-amd64](https://app.vagrantup.com/sitepoint/boxes/debian-buster-amd64) |
 | Debian Stretch 9 x86_64 | [debian-stretch-amd64](https://app.vagrantup.com/sitepoint/boxes/debian-stretch-amd64) |
 | Ubuntu Xenial 16.04 x86_64 | [ubuntu-xenial-amd64](https://app.vagrantup.com/sitepoint/boxes/ubuntu-xenial-amd64) |
 
