@@ -35,7 +35,7 @@ utils.lxc.create -t download -- \
     --release ${RELEASE} \
     --arch ${ARCH}
 if [ ${UID} -eq 0 ] &&
-    [ ${DISTRIBUTION} = 'debian' -a ${RELEASE} = 'stretch' ]
+    [ ${DISTRIBUTION} = 'debian' ]
 then
     # Improve systemd support:
     # - The debian template does it but the debian image from the download

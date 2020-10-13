@@ -60,6 +60,7 @@ _**NOTE:** None of the base boxes below have a provisioner pre-installed_
 
 | Distribution | VagrantCloud box |
 | ------------ | ---------------- |
+| Debian Buster 10 x86_64 | [debian-buster-amd64](https://app.vagrantup.com/sitepoint/boxes/debian-buster-amd64) |
 | Debian Stretch 9 x86_64 | [debian-stretch-amd64](https://app.vagrantup.com/sitepoint/boxes/debian-stretch-amd64) |
 | Ubuntu Xenial 16.04 x86_64 | [ubuntu-xenial-amd64](https://app.vagrantup.com/sitepoint/boxes/ubuntu-xenial-amd64) |
 

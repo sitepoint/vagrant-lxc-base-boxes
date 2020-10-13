@@ -1,4 +1,4 @@
-DEBIAN_BOXES= stretch
+DEBIAN_BOXES= buster stretch
 UBUNTU_BOXES= xenial
 TODAY=$(shell date -u +"%Y-%m-%d")
 
